@@ -15,7 +15,7 @@ app.get('/cards/:difficulty/:theme', (request, response) =>{
 
 
 app.listen(port, () => {
-    console.log('Server started on port 3000');
+    console.log('MemoryGameBe running');
 });
 
 const cardsData = {
