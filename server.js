@@ -9,11 +9,15 @@ app.use(cors());
 const food = 'FOOD';
 const faces = 'FACES';
 const flags = 'FLAGS';
+const pacman = 'PACMAN';
+
 
 const THEME_TYPE = {
     FOOD: food,
     FACES: faces,
-    FLAGS: flags 
+    FLAGS: flags,
+    PACMAN: pacman
+
 };
 const foodIcons = [
     '🍏', '🍎', '🍐', '🍊', '🍋', '🍋‍🟩', '🍌', '🍉', '🍇', '🍓', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥','🥝', '🍅', '🍆', '🥑', '🥦', '🥬', '🥒', '🌶', '🌽', '🥕','🧄', '🧅', '🥔', '🍠', '🥐', '🥯', '🍞', '🥖', '🥨', '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍗', '🍖', '🦴', '🌭', '🍔', '🍟', '🍕','🥪', '🥙', '🧆', '🌮', '🌯', '🥗', '🥘', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🦪', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🥮', '🍢', '🍡', '🍧', '🍨', '🍦', '🥧', '🧁', '🍰', '🎂', '🍮', '🍭', '🍬', '🍫', '🍿', '🍩', '🍪', '🌰', '🥜', '🍯', '🥛', '🍼', '☕️', '🍵', '🧃', '🥤', '🍶', '🍺', '🍻', '🥂', '🍷', '🥃', '🍸', '🍹', '🧉', 
@@ -25,6 +29,9 @@ const facesIcons = [
     '😻', '😼', '😽', '🙀', '😿', '😾'];
 const flagsIcons = [
     '🏳️', '🏴', '🏁', '🚩', '🏳️', '🏴‍☠️'
+];
+const pacmanImages = [
+    'fantasma1.png', 'fantasmas2.png', 'fantasmas3.png', 'fantasmas4.png', 'pacman.png'
 ];
 
 
@@ -56,6 +63,11 @@ app.get('/cards/:difficulty/:theme', (request, response) =>{
             cards = getCardsFromIconList(flagsIcons, difficulty);
 
             break;
+
+        case THEME_TYPE.PACMAN:
+            cards = getCardsFromIconList(pacmanImages, difficulty);
+    
+            break;
     
         default:
             break;
@@ -66,11 +78,17 @@ app.get('/cards/:difficulty/:theme', (request, response) =>{
 });
 
 function getCardsFromIconList(list, quantity) {
+    let iconIndexes = [];
+    
+    for (let index = 0; index < quantity; index++) {
+        let iconIndex = getUniqueIndex(0, list.length, iconIndexes);
+        iconIndexes.push(iconIndex);
+    }
+
     let cards = [];
 
-    for (let index = 0; index < quantity; index++) {
-        let iconIndex = generateRandomIndex(0, list.length - 1);
-        let icon = list[iconIndex];
+    for (let index = 0; index < iconIndexes.length; index++) {
+        let icon = list[iconIndexes[index]];
         
         let card = {
             "isDiscovered": false,
@@ -89,6 +107,17 @@ function getCardsFromIconList(list, quantity) {
     return cards;
 }
 
+    function getUniqueIndex(min, max, iconIndexes) {
+        const NewIndex = generateRandomIndex (min, max);
+
+        for (let index = 0; iconIndexes.length; index++) {
+        if (NewIndex === iconIndexes[index]){
+            return getUniqueIndex(min, max, iconIndexes);
+        }
+    }
+
+    return NewIndex;
+}
 
 function generateRandomIndex(min, max) {
     return Math.floor(min + Math.random()*(max - min + 1))
