@@ -44,11 +44,12 @@ const pacmanImages = [
 app.get('/cards/:difficulty/:theme', (request, response) =>{
     console.log('difficulty',request.params.difficulty);
     console.log('theme',request.params.theme);
+   
     let cards = [];
 
     if (request?.params?.theme && request?.params?.difficulty){
 
-    const difficulty =  request.params.difficulty
+    const difficulty =  request.params.difficulty;
 
     switch (request.params.theme) {
         case THEME_TYPE.FOOD:
@@ -74,10 +75,11 @@ app.get('/cards/:difficulty/:theme', (request, response) =>{
     }
     console.log(cards);
  } 
-    response.send (JSON.stringify({'cards':cards}));
+    response.send (JSON.stringify({'cards': cards}));
 });
 
 function getCardsFromIconList(list, quantity) {
+
     let iconIndexes = [];
     
     for (let index = 0; index < quantity; index++) {
@@ -104,17 +106,23 @@ function getCardsFromIconList(list, quantity) {
     cards = cards.concat(cardDuplicate);
     shuffle(cards);
 
-    return cards;
+    console.log(cardDuplicate);
+
+    let cardsConcatenated = cards.concat(cardDuplicate);
+    console.log(cardsConcatenated);
+
+    return cards
 }
 
     function getUniqueIndex(min, max, iconIndexes) {
         const NewIndex = generateRandomIndex (min, max);
 
-        for (let index = 0; iconIndexes.length; index++) {
-        if (NewIndex === iconIndexes[index]){
-            return getUniqueIndex(min, max, iconIndexes);
+        for (let i = 0; i < iconIndexes.length; i++) {
+            if (NewIndex === iconIndexes[i]){
+                return getUniqueIndex(min, max, iconIndexes)
+            }
+            
         }
-    }
 
     return NewIndex;
 }
