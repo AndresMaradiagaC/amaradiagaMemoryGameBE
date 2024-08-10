@@ -28,10 +28,10 @@ const facesIcons = [
     '😢', '😭', '😮', '😤', '😠', '😡', '🤬', '🤯', '😳', '🥵', '🥶', '😱', '😨', '😰', '😥', '😓',  '🤗', '🤔','🤭', '🤫', '🤥', '😶', '😐', '😑', '😬', '🙄', '😯', '😦', '😧', '😮', '😲','🥱', '😴', '🤤', '😪', '😵', '🤐', '🥴', '🤢', '🤮', '🤧', '😷','🤒', '🤕', '🤑', '🤠', '😈', '👿', '👹', '👺', '🤡', '💩','👻', '💀', '☠️', '👽', '👾', '🤖', '🎃', '😺', '😸', '😹', 
     '😻', '😼', '😽', '🙀', '😿', '😾'];
 const flagsIcons = [
-    '🏳️', '🏴', '🏁', '🚩', '🏳️', '🏴‍☠️'
+    '🏳️', '🏴', '🏁', '🚩', '🏳️', '🏴‍☠️','🤧', '😷','🤒', '🤕', '🤑', '🤠', '😈', '👿', '👹', '👺', '🤡', '🤖',
 ];
 const pacmanImages = [
-    'fantasma1.png', 'fantasmas2.png', 'fantasmas3.png', 'fantasmas4.png', 'pacman.png'
+    'f-1.png', 'f-2.png', 'f-3.png', 'f-4.png', 'f-5.png', 'f-6.png', 'f-7.png', 'f-8.png', 'f-9.png', 'f-10.png', 'f-11.png','f-12.png', 'f-13.png', 'f-14.png', 'f-15.png', 'f-16.png','p-5.png', 'pacmanlogo.png'
 ];
 
 
@@ -115,16 +115,16 @@ function getCardsFromIconList(list, quantity) {
 }
 
     function getUniqueIndex(min, max, iconIndexes) {
-        const NewIndex = generateRandomIndex (min, max);
+        const newIndex = generateRandomIndex (min, max);
 
         for (let i = 0; i < iconIndexes.length; i++) {
-            if (NewIndex === iconIndexes[i]){
+            if (newIndex === iconIndexes[i]){
                 return getUniqueIndex(min, max, iconIndexes)
             }
             
         }
 
-    return NewIndex;
+    return newIndex;
 }
 
 function generateRandomIndex(min, max) {
