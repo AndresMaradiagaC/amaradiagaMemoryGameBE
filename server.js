@@ -17,6 +17,7 @@ const faces = 'FACES';
 const flags = 'FLAGS';
 const pacman = 'PACMAN';
 const mario = 'MARIO';
+const sonic = 'SONIC';
 
 
 
@@ -26,7 +27,8 @@ const THEME_TYPE = {
     FACES: faces,
     FLAGS: flags,
     PACMAN: pacman,
-    MARIO: mario
+    MARIO: mario,
+    SONIC: sonic
 
 };
 const foodIcons = [
@@ -46,6 +48,10 @@ const pacmanImages = [
 
 const marioImages = [
     'm-1.png', 'm-2.png', 'm-3.png', 'm-4.png', 'm-5.png', 'm-6.png', 'm-7.png', 'm-8.png', 'm-9.png', 'm-10.png', 'm-11.png','m-12.png', 'm-13.png', 'm-14.png', 'm-15.png', 'm-16.png','m-17.png'
+];
+
+const sonicImages = [
+    's-1.png', 's-2.png', 's-3.png', 's-4.png', 's-5.png', 's-6.png', 's-7.png', 's-8.png', 's-9.png', 's-10.png', 's-11.png','s-12.png', 's-13.png', 's-14.png','s-16.png','s-17.png'
 ];
 const databaseURL ='https://amaradiagamemorygame-default-rtdb.firebaseio.com/scores.json';
 
@@ -142,6 +148,10 @@ app.get('/cards/:difficulty/:theme', (request, response) =>{
         case THEME_TYPE.MARIO:
             cards = getCardsFromIconList(marioImages, difficulty);
         
+             break;
+        case THEME_TYPE.SONIC:
+            cards = getCardsFromIconList(sonicImages, difficulty);
+            
              break;
     
         default:
