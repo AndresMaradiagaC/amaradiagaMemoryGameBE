@@ -162,17 +162,11 @@ function getCardsFromIconList(list, quantity) {
         cards.push(card);
     }
 
-    let cardDuplicate = cards.slice();
+	let cardsDuplicate = cards.slice();
+	cards = cards.concat(cardsDuplicate);
+	shuffle(cards);
 
-    cards = cards.concat(cardDuplicate);
-    shuffle(cards);
-
-    console.log(cardDuplicate);
-
-    let cardsConcatenated = cards.concat(cardDuplicate);
-    console.log(cardsConcatenated);
-
-    return cards
+	return cards;
 }
 
     function getUniqueIndex(min, max, iconIndexes) {
@@ -208,10 +202,7 @@ function generateRandomIndex(min, max) {
     }
   }
   
-  // Used like so
-  let arr = [2, 11, 37, 42];
-  shuffle(arr);
-  console.log(arr);
+
 
 app.listen(port, () => {
     console.log('MemoryGameBe running');
