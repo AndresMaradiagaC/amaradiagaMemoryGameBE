@@ -1,9 +1,15 @@
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
-const cors= require('cors');
 const port = 3000;
-
+const axios = require('axios');
 app.use(cors());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+
 
 
 const food = 'FOOD';
@@ -33,11 +39,66 @@ const flagsIcons = [
 const pacmanImages = [
     'f-1.png', 'f-2.png', 'f-3.png', 'f-4.png', 'f-5.png', 'f-6.png', 'f-7.png', 'f-8.png', 'f-9.png', 'f-10.png', 'f-11.png','f-12.png', 'f-13.png', 'f-14.png', 'f-15.png', 'f-16.png','p-5.png', 'pacmanlogo.png'
 ];
+const databaseURL ='https://amaradiagamemorygame-default-rtdb.firebaseio.com/scores.json';
 
 
 
+app.post('/score', (request, response) => {
+	let body = [];
+	request.on('data', (chunk) => {
+		body.push(chunk);
+	}).on('end', () => {
+		const jsonData = Buffer.concat(body).toString();
+		if (jsonData !== undefined) {
+			const score = JSON.parse(jsonData);
+			if (score !== undefined &&
+				score.clicks !== undefined &&
+				score.time !== undefined &&
+				score.score !== undefined &&
+				score.username !== undefined &&
+				score.difficulty !== undefined) {
+
+				axios.post(databaseURL, score).then(function (result) {
+					response.send('Score saved!');
+				}).catch(function (error) {
+					response.send(error);
+				});
+
+			} else {
+				response.send('Some data in score undefined or null!');
+			}
+		} else {
+			response.send('request.body undefined or null!');
+		}
+	});
+});
 
 
+app.get('/scores', (request, response) => {
+	axios.get(databaseURL)
+		.then(function (res) {
+			response.send(res.data);
+		})
+		.catch(function (error) {
+			response.send(JSON.stringify({ error: 'Error requestion scores' }));
+		})
+		.finally(function () {
+			// always executed
+		});
+});
+
+//app.get('/scores', (request, response) => {
+//	axios.get(databaseURL)
+	//	.then(function (res) {
+	//		response.send(res.data);
+	//	})
+	//	.catch(function (error) {
+//			response.send(JSON.stringify({ error: 'Error requestion scores' }));
+	//	})
+	//	.finally(function () {
+	//		// always executed
+	//	});
+//});
 
 
 //API
