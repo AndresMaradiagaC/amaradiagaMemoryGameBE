@@ -43,7 +43,7 @@ const databaseURL ='https://amaradiagamemorygame-default-rtdb.firebaseio.com/sco
 
 
 
-app.post('/score', (request, response) => {
+app.post('/scores', (request, response) => {
 	let body = [];
 	request.on('data', (chunk) => {
 		body.push(chunk);
